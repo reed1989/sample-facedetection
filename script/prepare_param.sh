@@ -42,6 +42,8 @@ data_source=$3
 . ${script_path}/func_util.sh
 . ${script_path}/func_deploy.sh
 
+app_path="${script_path}/.."
+
 function main()
 {
     if [[ $# -lt 3 ]];then
@@ -59,15 +61,15 @@ function main()
         exit 1
     fi
     echo "Prepare app configuration..."
-    cp -r ${script_path}/facedetectionapp/graph_deploy.config ${script_path}/facedetectionapp/out/graph.config
-    sed -i "s/\${template_data_source}/${data_source}/g" ${script_path}/facedetectionapp/out/graph.config
-    sed -i "s/\${template_app_name}/${presenter_view_app_name}/g" ${script_path}/facedetectionapp/out/graph.config
+    cp -r ${app_path}/facedetectionapp/graph_deploy.config ${app_path}/facedetectionapp/out/graph.config
+    sed -i "s/\${template_data_source}/${data_source}/g" ${app_path}/facedetectionapp/out/graph.config
+    sed -i "s/\${template_app_name}/${presenter_view_app_name}/g" ${app_path}/facedetectionapp/out/graph.config
     
     parse_remote_port
     
-    upload_file ${script_path}/facedetectionapp/out/graph.config "~/HIAI_PROJECTS/ascend_workspace/facedetectionapp/out"
+    upload_file ${app_path}/facedetectionapp/out/graph.config "~/HIAI_PROJECTS/ascend_workspace/facedetectionapp/out"
     if [[ $? -ne 0 ]];then
-        echo "ERROR: sync ${script_path}/facedetectionapp/graph.config ${remote_host}:./HIAI_PROJECTS/ascend_workspace/facedetectionapp/out failed, please check /var/log/syslog for details."
+        echo "ERROR: sync ${app_path}/facedetectionapp/graph.config ${remote_host}:./HIAI_PROJECTS/ascend_workspace/facedetectionapp/out failed, please check /var/log/syslog for details."
         exit 1
     fi
     echo "Finish to prepare facedetectionapp params."

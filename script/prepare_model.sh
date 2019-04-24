@@ -36,6 +36,8 @@ script_path="$( cd "$(dirname "$0")" ; pwd -P )"
 
 tools_version=$1
 
+app_path="${script_path}/.."
+
 function download_prepare_model_script()
 {
     echo "download download_model.sh..."
@@ -63,14 +65,14 @@ function prepare()
         for model_info in ${model_names}
         do
             model_name=`basename ${model_info}`
-            if [ ! -f "${script_path}/${model_name}.om" ];then
+            if [ ! -f "${app_path}/${model_name}.om" ];then
                 echo "ERROR: current path has no ${model_name}.om."
                 echo "\tPrepare models automatically, excute:./prepare_model.sh tools_version"
                 echo "\tDownload models to current path manually, and excute: ./prepare_model.sh local"
                 return 1
             else
-                mkdir -p ${script_path}/MyModel/${model_name}/device
-                cp ${script_path}/${model_name}.om ${script_path}/MyModel/${model_name}/device/
+                mkdir -p ${app_path}/MyModel/${model_name}/device
+                cp ${app_path}/${model_name}.om ${app_path}/MyModel/${model_name}/device/
             fi
         done
     else
@@ -88,8 +90,8 @@ function prepare()
         for model_info in ${model_names}
         do
             model_name=`basename ${model_info}`
-            mkdir -p ${script_path}/MyModel/${model_name}/device
-            cp ${script_path}/${model_name}_${tools_version}.om ${script_path}/MyModel/${model_name}/device/${model_name}.om
+            mkdir -p ${app_path}/MyModel/${model_name}/device
+            cp ${script_path}/${model_name}_${tools_version}.om ${app_path}/MyModel/${model_name}/device/${model_name}.om
         done
 
     fi

@@ -35,6 +35,8 @@
 
 script_path="$( cd "$(dirname "$0")" ; pwd -P )"
 
+app_path="${script_path}/.."
+
 main()
 {
     if [ ! -n ${DDK_HOME} ];then
@@ -43,17 +45,17 @@ main()
     fi
 
     echo "Clear app build path..."
-    rm -rf ${script_path}/facedetectionapp/out
+    rm -rf ${app_path}/facedetectionapp/out
 
     echo "Build main..."
-    make -C ${script_path}/facedetectionapp 1>/dev/null
+    make -C ${app_path}/facedetectionapp 1>/dev/null
     if [ $? -ne 0 ];then
         exit 1
     fi
 
-    for file in `find ${script_path}/facedetectionapp -name "Makefile"`
+    for file in `find ${app_path}/facedetectionapp -name "Makefile"`
     do
-        if [ ${file} == "${script_path}/facedetectionapp/Makefile" ];then
+        if [ ${file} == "${app_path}/facedetectionapp/Makefile" ];then
             continue
         fi
         path=`dirname ${file}`

@@ -40,8 +40,8 @@ model_mode=$2
 
 app_name="facedetectionapp"
 
-. ${script_path}/func_deploy.sh
-. ${script_path}/func_util.sh
+. ${script_path}/script/func_deploy.sh
+. ${script_path}/script/func_util.sh
 
 function deploy_app()
 {
@@ -50,19 +50,19 @@ function deploy_app()
 
     #build common
     echo "[Step] Build common libs..."
-    bash ${script_path}/build_ezdvpp.sh
+    bash ${script_path}/script/build_ezdvpp.sh
     if [[ $? -ne 0 ]];then
         return 1
     fi
 
-    bash ${script_path}/build_presenteragent.sh
+    bash ${script_path}/script/build_presenteragent.sh
     if [[ $? -ne 0 ]];then
         return 1
     fi
 
     #build app
     echo "[Step] Build app libs..."
-    bash ${script_path}/build.sh
+    bash ${script_path}/script/build.sh
     if [[ $? -ne 0 ]];then
         return 1
     fi
@@ -79,7 +79,7 @@ function deploy_app()
                 return 1
             fi
         fi
-        bash ${script_path}/prepare_model.sh ${model_version}
+        bash ${script_path}/script/prepare_model.sh ${model_version}
         if [[ $? -ne 0 ]];then
             return 1
         fi
@@ -87,7 +87,7 @@ function deploy_app()
 
     #deploy common libs
     echo "[Step] Deploy common libs..."
-    bash ${script_path}/deploy_sdk.sh ${remote_host}
+    bash ${script_path}/script/deploy_sdk.sh ${remote_host}
     if [[ $? -ne 0 ]];then
         return 1
     fi
@@ -134,7 +134,7 @@ main()
     fi
     
     echo "[Step] Prepare presenter server information and graph.confg..."
-    bash ${script_path}/prepare_graph.sh ${remote_host} ${download_mode}
+    bash ${script_path}/script/prepare_graph.sh ${remote_host} ${download_mode}
     echo "Finish to deploy facedetectionapp."
     exit 0
 }

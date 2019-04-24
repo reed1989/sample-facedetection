@@ -36,65 +36,54 @@
 script_path="$( cd "$(dirname "$0")" ; pwd -P )"
 
 remote_host=$1
-presenter_view_app_name=$2
-data_source=$3
+download_mode=$2
 
-. ${script_path}/script/func_util.sh
-. ${script_path}/script/func_deploy.sh
+. ${script_path}/func_deploy.sh
+. ${script_path}/func_util.sh
 
-function kill_remote_running()
+app_path="${script_path}/.."
+
+function modify_graph()
 {
-    echo -e "\nrun.sh exit, kill ${remote_host}:ascend_facedetectionapp running..."
-    parse_remote_port
-    iRet=$(IDE-daemon-client --host ${remote_host}:${remote_port} --hostcmd "for p in \`pidof ascend_facedetectionapp\`; do { echo \"kill \$p\"; kill \$p; }; done")
+    echo "Modify presenter server information in graph.config..."
+    cp -r ${app_path}/facedetectionapp/graph_template.config ${app_path}/facedetectionapp/graph_deploy.config
+    presenter_ip=`grep presenter_server_ip ${app_path}/presenterserver/face_detection/config/config.conf | awk -F '=' '{print $2}' | sed 's/[^0-9.]//g'`
     if [[ $? -ne 0 ]];then
-        echo "ERROR: kill ${remote_host}:ascend_facedetectionapp running failed, please login to kill it manually."
-    else
-        echo "$iRet in ${remote_host}."
+        echo "ERROR: get presenter server ip failed, please check ${app_path}/presenterserver/face_detection/config/config.conf."
+        return 1
     fi
-    exit
+    
+    presenter_port=`grep presenter_server_port ${app_path}/presenterserver/face_detection/config/config.conf | awk -F '=' '{print $2}' | sed 's/[^0-9]//g'`
+    if [[ $? -ne 0 ]];then
+        echo "ERROR: get presenter server port failed, please check ${app_path}/presenterserver/face_detection/config/config.conf."
+        return 1
+    fi
+    
+    sed -i "s/\${template_presenter_ip}/${presenter_ip}/g" ${app_path}/facedetectionapp/graph_deploy.config
+    sed -i "s/\${template_presenter_port}/${presenter_port}/g" ${app_path}/facedetectionapp/graph_deploy.config
+    return 0
 }
-
-trap 'kill_remote_running' 2 15
 
 function main()
 {
-    if [[ $# -lt 3 ]];then
-        echo "ERROR: invalid command, please check your command format: ./run_facedetectionapp.sh host_ip presenter_view_app_name camera_channel_name."
-        exit 1
-    fi
-
+    echo "Modify presenter server configuration..."
     check_ip_addr ${remote_host}
     if [[ $? -ne 0 ]];then
-        echo "ERROR: invalid host ip, please check your command format: ./run_facedetectionapp.sh host_ip presenter_view_app_name camera_channel_name."
+        echo "ERROR: invalid host ip, please check your command format: ./prepare_graph.sh host_ip [download_mode(local/internet)]."
         exit 1
     fi
-
-    bash ${script_path}/script/prepare_param.sh ${remote_host} ${presenter_view_app_name} ${data_source}
+    bash ${script_path}/prepare_presenter_server.sh ${remote_host} ${download_mode}
     if [[ $? -ne 0 ]];then
         exit 1
     fi
-
-    #start presenter
-    #cd {script_path}/script
-    presenter_server_pid=`ps -ef | grep "presenter_server\.py" | grep "face_detection" | awk -F ' ' '{print $2}'`
-    if [[ ${presenter_server_pid}"X" == "X" ]];then
-        echo "presenter server for face detection is not started, please start it."
-        exit 1
-    fi
-
-
-    parse_remote_port
-
-    echo "[Step] run ${remote_host}:ascend_facedetectionapp..."
-
-    #start app
-    iRet=`IDE-daemon-client --host $remote_host:${remote_port} --hostcmd "cd ~/HIAI_PROJECTS/ascend_workspace/facedetectionapp/out/;./ascend_facedetectionapp"`
+    
+    modify_graph
     if [[ $? -ne 0 ]];then
-        echo "ERROR: excute ${remote_host}:./HIAI_PROJECTS/ascend_workspace/facedetectionapp/out/ascend_facedetectionapp failed, please check /var/log/syslog and board running log from IDE Log Module for details."
         exit 1
     fi
+    
+    echo "Finish to prepare facedetectionapp graph."
     exit 0
 }
 
-main $*
+main

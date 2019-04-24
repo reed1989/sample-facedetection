@@ -25,6 +25,8 @@ app_name="face_detection"
 remote_host=$1
 download_mode=$2
 
+app_path="${script_path}/.."
+
 presenter_atlasdk_ip=""
 presenter_view_ip=""
 
@@ -185,8 +187,8 @@ function main()
     fi
 
     if [[ ${download_mode} != "local" ]];then
-        echo "Install python3 libs: pip3 install -r ${script_path}/requirements..."
-        pip3 install -r ${script_path}/requirements
+        echo "Install python3 libs: pip3 install -r ${app_path}/presenterserver/requirements..."
+        pip3 install -r ${app_path}/presenterserver/requirements
         if [ $? -ne 0 ];then
             echo "ERROR: install python3 libs failed, please check your env."
             return 1
@@ -197,10 +199,10 @@ function main()
     parse_presenter_view_ip
     
     echo "Use ${presenter_atlasdk_ip} to connect to Atlas DK Developerment Board..."
-    sed -i "s/presenter_server_ip=[0-9.]*/presenter_server_ip=${presenter_atlasdk_ip}/g" ${script_path}/${app_name}/config/config.conf
+    sed -i "s/presenter_server_ip=[0-9.]*/presenter_server_ip=${presenter_atlasdk_ip}/g" ${app_path}/presenterserver/${app_name}/config/config.conf
     
     echo "Use ${presenter_view_ip} to show information in browser..."
-    sed -i "s/web_server_ip=[0-9.]*/web_server_ip=${presenter_view_ip}/g" ${script_path}/${app_name}/config/config.conf
+    sed -i "s/web_server_ip=[0-9.]*/web_server_ip=${presenter_view_ip}/g" ${app_path}/presenterserver/${app_name}/config/config.conf
     echo "Finish to prepare ${app_name} presenter server ip configuration."
 }
 
