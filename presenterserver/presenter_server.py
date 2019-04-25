@@ -43,29 +43,13 @@ WEB_SERVER = None
 APP_SERVER = None
 RUN_SERVER = None
 SERVER_TYPE = ""
-USAGE_INFO = "python3 prensenter_server.py [-h] --app \n\t\t\t\t{face_detection,facial_recognition,video_analysis,display}"
+USAGE_INFO = "python3 prensenter_server.py [-h] --app \n\t\t\t\t{face_detection}"
 
 FACE_DETION_MAP = {"web_server": "face_detection.src.web",
                     "app_server": "face_detection.src.face_detection_server"
                   }
 
-FACIAL_RECOGNITION_MAP = {"web_server": "facial_recognition.src.web",
-                          "app_server": "facial_recognition.src.facial_recognition_server"
-                          }
-
-VIDEO_ANALYSIS_MAP = {"web_server": "video_analysis.src.web",
-                      "app_server": "video_analysis.src.video_analysis_server"
-                     }
-
-COMMON_MAP = {"web_server": "display.src.web",
-              "app_server": "display.src.display_server"
-            }
-
-APP_CONF_MAP = {"face_detection": FACE_DETION_MAP,
-                "facial_recognition": FACIAL_RECOGNITION_MAP,
-                "video_analysis": VIDEO_ANALYSIS_MAP,
-                "display": COMMON_MAP
-               }
+APP_CONF_MAP = {"face_detection": FACE_DETION_MAP}
 
 
 def arg_parse():
@@ -76,10 +60,7 @@ def arg_parse():
 
     parser = argparse.ArgumentParser(usage=USAGE_INFO)
     parser.add_argument('--app', type=str, required=True,
-                        choices=['face_detection',
-                                 'facial_recognition',
-                                 'video_analysis',
-                                 'display'],
+                        choices=['face_detection'],
                         help="Application type corresponding to Presenter Server.")
     args = parser.parse_args()
     SERVER_TYPE = args.app

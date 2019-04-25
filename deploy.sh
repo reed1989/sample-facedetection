@@ -124,7 +124,7 @@ main()
 {
     check_ip_addr ${remote_host}
     if [[ $? -ne 0 ]];then
-        echo "ERROR: invalid host ip, please check your command format: ./deploy.sh host_ip [model_mode(local/internet)]."
+        echo "ERROR: invalid host ip, please check your command format: ./deploy.sh host_ip [download_mode(local/internet)]."
         exit 1
     fi
     
