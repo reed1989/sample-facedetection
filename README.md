@@ -44,7 +44,7 @@ Before running the application, obtain the source code package and configure the
     >-   **XXX**  indicates the Mind Studio installation user, and  **/home/XXX/tools**  indicates the default installation path of the DDK.  
     >-   If the environment variables have been added, skip this step.  
 
-    Enter** :wq! **to save and exit.
+    Enter **:wq!** to save and exit.
 
     Run the following command for the environment variable to take effect:
 
@@ -60,10 +60,10 @@ Before running the application, obtain the source code package and configure the
 2.  Access the root directory where the face detection application code is located as the Mind Studio installation user, for example,  _**/home/ascend/sample-facedetection**_.
 3.  Run the deployment script to prepare the project environment, including compiling and deploying the ascenddk public library, downloading the network model, and configuring Presenter Server.
 
-    **bash deploy.sh**_host\_ip_ _model\_mode_
+    **bash deploy.sh** _host\_ip_ _model\_mode_
 
     -   _host\_ip_: For the Atlas 200 DK developer board, this parameter indicates the IP address of the developer board.
-    -   _model\_mode_  indicates the deployment mode of the model file. The value can be  **local**  or** internet**. The default setting is  **internet**.
+    -   _model\_mode_  indicates the deployment mode of the model file. The value can be  **local**  or **internet**. The default setting is  **internet**.
         -   **local**: Indicates the local deployment mode. If the Ubuntu system where Mind Studio is located is not connected to the network, use the local mode. In this case, download the network model file to the root directory of the application code, that is,  _**sample-facedetection**_, by referring to  [1](#en-us_topic_0167089636_li206239341242).
         -   **internet**: Indicates the online deployment mode. If the Ubuntu system where Mind Studio is located is connected to the network, use the Internet mode. In this case, download the model file online.
 
