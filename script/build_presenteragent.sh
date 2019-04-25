@@ -41,7 +41,7 @@ presenteragent_version="1.0.0"
 function download_code()
 {
     if [ -d ${script_path}/presenteragent ];then
-        echo "presenteragent code have been downloaded, skip download work..."
+        echo "Presenteragent code is found..."
         return 0
     else
         if [[ ${download_mode} == "local" ]];then

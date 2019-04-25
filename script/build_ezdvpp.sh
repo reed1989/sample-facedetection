@@ -41,7 +41,7 @@ ezdvpp_version="1.0.0"
 function download_code()
 {
     if [ -d ${script_path}/ezdvpp ];then
-        echo "EZdvpp code have been downloaded, skip download work..."
+        echo "EZdvpp code if found..."
         return 0
     else
         if [[ ${download_mode} == "local" ]];then

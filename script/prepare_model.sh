@@ -65,14 +65,12 @@ function prepare()
         for model_info in ${model_names}
         do
             model_name=`basename ${model_info}`
-            if [ ! -f "${app_path}/${model_name}.om" ];then
-                echo "ERROR: current path has no ${model_name}.om."
-                echo "\tPrepare models automatically, excute:./prepare_model.sh tools_version"
-                echo "\tDownload models to current path manually, and excute: ./prepare_model.sh local"
+            if [ ! -f "${script_path}/${model_name}.om" ];then
+                echo "ERROR: No ${model_name}.om in current path: ${script_path} for local mode."
                 return 1
             else
                 mkdir -p ${app_path}/MyModel/${model_name}/device
-                cp ${app_path}/${model_name}.om ${app_path}/MyModel/${model_name}/device/
+                cp ${script_path}/${model_name}.om ${app_path}/MyModel/${model_name}/device/
             fi
         done
     else

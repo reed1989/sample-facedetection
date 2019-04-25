@@ -36,7 +36,7 @@
 script_path="$( cd "$(dirname "$0")" ; pwd -P )"
 
 remote_host=$1
-model_mode=$2
+download_mode=$2
 
 app_name="facedetectionapp"
 
@@ -50,12 +50,12 @@ function deploy_app()
 
     #build common
     echo "[Step] Build common libs..."
-    bash ${script_path}/script/build_ezdvpp.sh
+    bash ${script_path}/script/build_ezdvpp.sh ${download_mode}
     if [[ $? -ne 0 ]];then
         return 1
     fi
 
-    bash ${script_path}/script/build_presenteragent.sh
+    bash ${script_path}/script/build_presenteragent.sh ${download_modes}
     if [[ $? -ne 0 ]];then
         return 1
     fi

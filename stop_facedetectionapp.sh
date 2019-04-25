@@ -37,8 +37,8 @@ script_path="$( cd "$(dirname "$0")" ; pwd -P )"
 
 remote_host=$1
 
-. ${script_path}/func_util.sh
-. ${script_path}/func_deploy.sh
+. ${script_path}/script/func_util.sh
+. ${script_path}/script/func_deploy.sh
 
 function kill_remote_running()
 {
