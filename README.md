@@ -30,7 +30,7 @@ Before running the application, obtain the source code package and configure the
 
     Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection](https://github.com/Ascend/sample-facedetection)  to any directory on Ubuntu Server where Mind Studio is located as the Mind Studio installation user, for example,  _/home/ascend/sample-facedetection/_.
 
-2.  Log in to Ubuntu Server where Mind Studio is located as the Mind Studio installation user and set the environment variable** DDK\_HOME**.
+2.  Log in to Ubuntu Server where Mind Studio is located as the Mind Studio installation user and set the environment variable **DDK\_HOME**.
 
     **vim \~/.bashrc**
 
@@ -60,7 +60,7 @@ Before running the application, obtain the source code package and configure the
 2.  Access the root directory where the face detection application code is located as the Mind Studio installation user, for example,  _**/home/ascend/sample-facedetection**_.
 3.  Run the deployment script to prepare the project environment, including compiling and deploying the ascenddk public library, downloading the network model, and configuring Presenter Server.
 
-    **bash deploy.sh **_host\_ip_ _model\_mode_
+    **bash deploy.sh**_host\_ip_ _model\_mode_
 
     -   _host\_ip_: For the Atlas 200 DK developer board, this parameter indicates the IP address of the developer board.
     -   _model\_mode_  indicates the deployment mode of the model file. The value can be  **local**  or** internet**. The default setting is  **internet**.
@@ -103,7 +103,7 @@ Before running the application, obtain the source code package and configure the
 
 1.  Run the face detection application.
 
-    Run the following command in the  **sample-facedetection**  directory \(for example,** /home/ascend/sample-facedetection**\) to start the face detection application:
+    Run the following command in the  **sample-facedetection**  directory \(for example,**/home/ascend/sample-facedetection**\) to start the face detection application:
 
     **bash run\_facedetectionapp.sh** _host\_ip_ _presenter\_view\_app\_name camera\_channel\_name_  &
 
