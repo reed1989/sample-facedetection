@@ -64,7 +64,7 @@ def arg_parse():
                         help="Application type corresponding to Presenter Server.")
     args = parser.parse_args()
     SERVER_TYPE = args.app
-    app_conf = APP_CONF_MAP.get(SERVER_TYPE, COMMON_MAP)
+    app_conf = APP_CONF_MAP.get(SERVER_TYPE)
     
     WEB_SERVER = __import__(app_conf.get("web_server"), fromlist=True)
     APP_SERVER = __import__(app_conf.get("app_server"), fromlist=True)
