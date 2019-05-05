@@ -88,6 +88,8 @@ HIAI_StatusT Mind_CameraDatasets::Init(
     config_ = make_shared<CameraDatasetsConfig>();
   }
 
+
+
   for (int index = 0; index < ai_config.items_size(); ++index) {
     const ::hiai::AIConfigItem& item = ai_config.items(index);
     string name = item.name();
